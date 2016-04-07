@@ -4,11 +4,14 @@ CatDefender.Game = function(game) {
 	this.totalSpacerocks;
 	this.spacerockgroup;
 	this.burst;
+	this.gameover;
+	this.countdown;
 };
 
 CatDefender.Game.prototype = {
 	
 	create: function() {
+		this.gameover = false;
 		this.totalCats = 20;
 		this.totalSpacerocks = 13;
 		this.buildWorld();
@@ -20,6 +23,7 @@ CatDefender.Game.prototype = {
 		this.buildCats();
 		this.buildSpaceRocks();
 		this.buildEmitter();
+		this.countdown = this.add.bitmapText(10, 10, 'eightbitwonder', 'Cats Left ' + this.totalCats, 20);
 	},
 
 	buildCats: function() {
@@ -85,8 +89,10 @@ CatDefender.Game.prototype = {
 	},
 
 	respawnRock: function(r) {
-	    r.reset(this.rnd.integerInRange(0, this.world.width), this.rnd.realInRange(-1500, 0));
-	    r.body.velocity.y = this.rnd.integerInRange(200, 400);
+		if(this.gameover == false){
+		    r.reset(this.rnd.integerInRange(0, this.world.width), this.rnd.realInRange(-1500, 0));
+		    r.body.velocity.y = this.rnd.integerInRange(200, 400);
+		}
 	},
 
 	buildEmitter:function() {
@@ -100,9 +106,11 @@ CatDefender.Game.prototype = {
 	},
 
 	fireBurst: function(pointer) {
-	    this.burst.emitX = pointer.x;
-	    this.burst.emitY = pointer.y;
-	    this.burst.start(true, 2000, null, 20);
+		if(this.gameover == false){
+		    this.burst.emitX = pointer.x;
+		    this.burst.emitY = pointer.y;
+		    this.burst.start(true, 2000, null, 20);
+		}
 	},
 
 	burstCollision: function(r, c) {
@@ -121,7 +129,10 @@ CatDefender.Game.prototype = {
 
 	checkCatsLeft: function() {
 	    if(this.totalCats <= 0){
-	        // GAME OVER
+	        this.gameover = true;
+	        this.countdown.setText('Cats Left 0');
+	    } else {
+	    	this.countdown.setText('Cats Left ' + this.totalCats);
 	    }
 	},
 
