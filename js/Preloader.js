@@ -19,6 +19,7 @@ CatDefender.Preloader.prototype = {
 		this.load.atlasJSONHash('cat', 'images/spritesheets/cat-sprite.png', 'images/spritesheets/cat-sprite.json');
 		this.load.atlasXML('spacerock', 'images/spritesheets/SpaceRock.png', 'images/spritesheets/SpaceRock.xml');
 		this.load.image('explosion', 'images/explosion.png');
+		this.load.image('ghost', 'images/cat-ghost.png');
 	},
 
 	create: function () {

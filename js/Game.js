@@ -112,6 +112,7 @@ CatDefender.Game.prototype = {
 	catCollision: function(r, c) {
 	    if(c.exists){
 	        this.respawnRock(r);
+	        this.makeGhost(c);
 	        c.kill();
 	        this.totalCats--;
 	        this.checkCatsLeft();
@@ -124,9 +125,30 @@ CatDefender.Game.prototype = {
 	    }
 	},
 
+	friendlyFire: function(c, e) {
+	    if(c.exists){
+	    	this.makeGhost(c);
+	        c.kill();
+	        this.totalCats--;
+	        this.checkCatsLeft();
+	    }
+	},
+
+	makeGhost: function(c) {
+	    catghost = this.add.sprite(c.x-20, c.y-180, 'ghost');
+	    catghost.anchor.setTo(0.5, 0.5);
+	    catghost.scale.x = c.scale.x
+	    this.physics.enable(catghost, Phaser.Physics.ARCADE);
+	    catghost.enableBody = true;
+	    catghost.checkWorldBounds = true;
+	    catghost.body.velocity.y = -800;
+	},
+
+
 	update: function() {
 		this.physics.arcade.overlap(this.spacerockgroup, this.burst, this.burstCollision, null, this);
 		this.physics.arcade.overlap(this.spacerockgroup, this.catgroup, this.catCollision, null, this);
+		this.physics.arcade.overlap(this.catgroup, this.burst, this.friendlyFire, null, this);
 	}
 	
 };
