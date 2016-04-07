@@ -6,6 +6,7 @@
 	<script src="js/Boot.js"></script>
 	<script src="js/Preloader.js"></script>
 	<script src="js/StartMenu.js"></script>
+	<script src="js/Game.js"></script>
 	<style>
 		body {
 			padding: 0;
@@ -22,6 +23,7 @@
 		game.state.add('Boot', CatDefender.Boot);
 		game.state.add('Preloader', CatDefender.Preloader);
 		game.state.add('StartMenu', CatDefender.StartMenu);
+		game.state.add('Game', CatDefender.Game);
 		game.state.start('Boot');
 		
 	};
