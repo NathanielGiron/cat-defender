@@ -2,7 +2,8 @@
 <html>
 <head>
 	<title>Cat Defender</title>
-
+	<script src="libs/phaser.js"></script>
+	<script src="Boot.js"></script>
 	<style>
 		body {
 			padding: 0;
@@ -12,6 +13,11 @@
 	</style>
 </head>
 <body>
-
+	<div id="gameContainer"></div>
+	<script type="text/javascript">
+	window.onload = function() {
+		var game = new Phaser.Game(540, 960, Phaser.AUTO, 'gameContainer');
+	};
+	</script>
 </body>
 </html>
