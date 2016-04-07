@@ -156,9 +156,12 @@ CatDefender.Game.prototype = {
 	        this.music.stop();
 	        this.countdown.setText('Cats Left 0');
 	        this.overmessage = this.add.bitmapText(this.world.centerX-180, this.world.centerY-130, 'eightbitwonder', 'GAME OVER\n\n' + this.secondsElapsed, 42);
+	        this.overmessage2 = this.add.bitmapText(this.world.centerX-120, this.world.centerY, 'eightbitwonder', '\n\nPlay Again', 30);
 			this.overmessage.align = "center";
 			this.overmessage.inputEnabled = true;
+			this.overmessage2.inputEnabled = true;
 			this.overmessage.events.onInputDown.addOnce(this.quitGame, this);
+			this.overmessage2.events.onInputDown.addOnce(this.quitGame, this);
 	    } else {
 	    	this.countdown.setText('Cats Left ' + this.totalCats);
 	    }

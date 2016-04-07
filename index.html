@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" sizes="196x196" href="images/cat.png">
 	<title>Cat Defender</title>
 	<script src="libs/phaser.js"></script>
-	<script src="js/Boot.js"></script>
-	<script src="js/Preloader.js"></script>
-	<script src="js/StartMenu.js"></script>
-	<script src="js/Game.js"></script>
+	<script src="states/Boot.js"></script>
+	<script src="states/Preloader.js"></script>
+	<script src="states/StartMenu.js"></script>
+	<script src="states/Game.js"></script>
 	<style>
 		body {
 			padding: 0;
 			margin: 0;
-			background-color: #fff;
+			background-color: #000;
 		}
 	</style>
 </head>
@@ -19,7 +22,7 @@
 	<div id="gameContainer"></div>
 	<script type="text/javascript">
 	window.onload = function() {
-		var game = new Phaser.Game(540, 960, Phaser.AUTO, 'gameContainer');
+		var game = new Phaser.Game(540, 960, Phaser.CANVAS, 'gameContainer');
 		game.state.add('Boot', CatDefender.Boot);
 		game.state.add('Preloader', CatDefender.Preloader);
 		game.state.add('StartMenu', CatDefender.StartMenu);
