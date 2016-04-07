@@ -17,6 +17,7 @@ CatDefender.Preloader.prototype = {
 		this.load.image('hill', 'images/hill.png');
 		this.load.image('sky', 'images/sky.png');
 		this.load.atlasJSONHash('cat', 'images/spritesheets/cat-sprite.png', 'images/spritesheets/cat-sprite.json');
+		this.load.atlasXML('spacerock', 'images/spritesheets/SpaceRock.png', 'images/spritesheets/SpaceRock.xml');
 	},
 
 	create: function () {

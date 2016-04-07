@@ -1,12 +1,15 @@
 CatDefender.Game = function(game) {
 	this.totalCats;
 	this.catgroup;
+	this.totalSpacerocks;
+	this.spacerockgroup;
 };
 
 CatDefender.Game.prototype = {
 	
 	create: function() {
 		this.totalCats = 20;
+		this.totalSpacerocks = 13;
 		this.buildWorld();
 	},
 
@@ -14,6 +17,7 @@ CatDefender.Game.prototype = {
 		this.add.image(0, 0, 'sky');
 		this.add.image(0, 800, 'hill');
 		this.buildCats();
+		this.buildSpaceRocks();
 	},
 
 	buildCats: function() {
@@ -52,6 +56,35 @@ CatDefender.Game.prototype = {
 	    c.animations.stop('Walk');
 	    c.animations.play('Rest', 10, true);
 	    this.assignCatMovement(c);
+	},
+
+	buildSpaceRocks: function() {
+	    this.spacerockgroup = this.add.group();
+	    for(var i=0; i<this.totalSpacerocks; i++) {
+	        var r = this.spacerockgroup.create(this.rnd.integerInRange(0, this.world.width), this.rnd.realInRange(-1500, 0), 'spacerock', 'SpaceRock0000');
+	        var scale = this.rnd.realInRange(0.3, 1.0);
+	        r.scale.x = scale;
+	        r.scale.y = scale;
+	        this.physics.enable(r, Phaser.Physics.ARCADE);
+	        r.enableBody = true;
+	        r.body.velocity.y = this.rnd.integerInRange(200, 400);
+	        r.animations.add('Fall');
+	        r.animations.play('Fall', 24, true);
+	        r.checkWorldBounds = true;
+			r.events.onOutOfBounds.add(this.resetRock, this);
+	    }
+
+	},
+
+	resetRock: function(r) {
+	    if(r.y > this.world.height){
+	        this.respawnRock(r);
+	    }
+	},
+
+	respawnRock: function(r) {
+	    r.reset(this.rnd.integerInRange(0, this.world.width), this.rnd.realInRange(-1500, 0));
+	    r.body.velocity.y = this.rnd.integerInRange(200, 400);
 	},
 
 	update: function() {}
