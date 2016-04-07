@@ -9,6 +9,10 @@ CatDefender.Game = function(game) {
 	this.overmessage;
 	this.secondsElapsed;
 	this.timer;
+	this.music;
+	this.ouch;
+	this.boom;
+	this.ding;
 };
 
 CatDefender.Game.prototype = {
@@ -20,6 +24,11 @@ CatDefender.Game.prototype = {
 		this.timer.loop(1000, this.updateSeconds, this);
 		this.totalCats = 20;
 		this.totalSpacerocks = 13;
+		this.music = this.add.audio('game_audio');
+		this.music.play('', 0, 0.3, true);
+		this.ouch = this.add.audio('hurt_audio');
+		this.boom = this.add.audio('explosion_audio');
+		this.ding = this.add.audio('select_audio');
 		this.buildWorld();
 	},
 
@@ -118,6 +127,8 @@ CatDefender.Game.prototype = {
 
 	fireBurst: function(pointer) {
 		if(this.gameover == false){
+			this.boom.play();
+			this.boom.volume = 0.2;
 		    this.burst.emitX = pointer.x;
 		    this.burst.emitY = pointer.y;
 		    this.burst.start(true, 2000, null, 20);
@@ -130,6 +141,7 @@ CatDefender.Game.prototype = {
 
 	catCollision: function(r, c) {
 	    if(c.exists){
+	    	this.ouch.play();
 	        this.respawnRock(r);
 	        this.makeGhost(c);
 	        c.kill();
@@ -141,6 +153,7 @@ CatDefender.Game.prototype = {
 	checkCatsLeft: function() {
 	    if(this.totalCats <= 0){
 	        this.gameover = true;
+	        this.music.stop();
 	        this.countdown.setText('Cats Left 0');
 	        this.overmessage = this.add.bitmapText(this.world.centerX-180, this.world.centerY-130, 'eightbitwonder', 'GAME OVER\n\n' + this.secondsElapsed, 42);
 			this.overmessage.align = "center";
@@ -152,11 +165,13 @@ CatDefender.Game.prototype = {
 	},
 
 	quitGame: function(pointer) {
+		this.ding.play();
 	    this.state.start('StartMenu');
 	}, 
 
 	friendlyFire: function(c, e) {
 	    if(c.exists){
+	    	this.ouch.play();
 	    	this.makeGhost(c);
 	        c.kill();
 	        this.totalCats--;
