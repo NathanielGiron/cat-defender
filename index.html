@@ -5,6 +5,7 @@
 	<script src="libs/phaser.js"></script>
 	<script src="js/Boot.js"></script>
 	<script src="js/Preloader.js"></script>
+	<script src="js/StartMenu.js"></script>
 	<style>
 		body {
 			padding: 0;
@@ -20,7 +21,9 @@
 		var game = new Phaser.Game(540, 960, Phaser.AUTO, 'gameContainer');
 		game.state.add('Boot', CatDefender.Boot);
 		game.state.add('Preloader', CatDefender.Preloader);
+		game.state.add('StartMenu', CatDefender.StartMenu);
 		game.state.start('Boot');
+		
 	};
 	</script>
 </body>
