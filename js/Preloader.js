@@ -14,6 +14,9 @@ CatDefender.Preloader.prototype = {
 		this.titleText.anchor.setTo(0.5, 0.5);
 		this.load.image('titlescreen', 'images/TitleBG.png');
 		this.load.bitmapFont('eightbitwonder', 'fonts/eightbitwonder.png', 'fonts/eightbitwonder.fnt');
+		this.load.image('hill', 'images/hill.png');
+		this.load.image('sky', 'images/sky.png');
+		this.load.atlasJSONHash('cat', 'images/spritesheets/cat-sprite.png', 'images/spritesheets/cat-sprite.json');
 	},
 
 	create: function () {
