@@ -105,6 +105,28 @@ CatDefender.Game.prototype = {
 	    this.burst.start(true, 2000, null, 20);
 	},
 
-	update: function() {}
+	burstCollision: function(r, c) {
+	    this.respawnRock(r);
+	},
+
+	catCollision: function(r, c) {
+	    if(c.exists){
+	        this.respawnRock(r);
+	        c.kill();
+	        this.totalCats--;
+	        this.checkCatsLeft();
+	    }
+	},
+
+	checkCatsLeft: function() {
+	    if(this.totalCats <= 0){
+	        // GAME OVER
+	    }
+	},
+
+	update: function() {
+		this.physics.arcade.overlap(this.spacerockgroup, this.burst, this.burstCollision, null, this);
+		this.physics.arcade.overlap(this.spacerockgroup, this.catgroup, this.catCollision, null, this);
+	}
 	
 };
