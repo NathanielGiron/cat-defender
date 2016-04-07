@@ -6,15 +6,25 @@ CatDefender.Game = function(game) {
 	this.burst;
 	this.gameover;
 	this.countdown;
+	this.overmessage;
+	this.secondsElapsed;
+	this.timer;
 };
 
 CatDefender.Game.prototype = {
 	
 	create: function() {
 		this.gameover = false;
+		this.secondsElapsed = 0;
+		this.timer = this.time.create(false);
+		this.timer.loop(1000, this.updateSeconds, this);
 		this.totalCats = 20;
 		this.totalSpacerocks = 13;
 		this.buildWorld();
+	},
+
+	updateSeconds: function() {
+		this.secondsElapsed++;
 	},
 
 	buildWorld: function() {
@@ -24,6 +34,7 @@ CatDefender.Game.prototype = {
 		this.buildSpaceRocks();
 		this.buildEmitter();
 		this.countdown = this.add.bitmapText(10, 10, 'eightbitwonder', 'Cats Left ' + this.totalCats, 20);
+		this.timer.start();
 	},
 
 	buildCats: function() {
@@ -131,10 +142,18 @@ CatDefender.Game.prototype = {
 	    if(this.totalCats <= 0){
 	        this.gameover = true;
 	        this.countdown.setText('Cats Left 0');
+	        this.overmessage = this.add.bitmapText(this.world.centerX-180, this.world.centerY-130, 'eightbitwonder', 'GAME OVER\n\n' + this.secondsElapsed, 42);
+			this.overmessage.align = "center";
+			this.overmessage.inputEnabled = true;
+			this.overmessage.events.onInputDown.addOnce(this.quitGame, this);
 	    } else {
 	    	this.countdown.setText('Cats Left ' + this.totalCats);
 	    }
 	},
+
+	quitGame: function(pointer) {
+	    this.state.start('StartMenu');
+	}, 
 
 	friendlyFire: function(c, e) {
 	    if(c.exists){
